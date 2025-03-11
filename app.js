@@ -14,8 +14,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Rota principal
 app.get('/', async (req, res) => {
   try {
-    const produtos = await consultarProduto();
-    res.render('index', { produtos });
+    produto=1
+    res.render('teste', { produto });
+    console.log('Rota Home')
   } catch (error) {
     res.status(500).send('Erro ao consultar produtos');
   }
