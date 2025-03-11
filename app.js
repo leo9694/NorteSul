@@ -3,13 +3,27 @@ const express = require('express');
 const path = require('path');
 const { consultarProduto, consultarProdutoCategoria } = require('./consultarProduto');
 const app = express();
-
+const { createProxyMiddleware } = require('http-proxy-middleware');
 // Configura o diretório de views e o motor de template
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 
 // Serve arquivos estáticos (como CSS)
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/proxy', createProxyMiddleware({
+  target: 'http://177.70.29.34:48180',
+  changeOrigin: true,
+  pathRewrite: {
+    '^/proxy': '', // Remove '/proxy' do início da URL
+  },
+  onProxyRes: function (proxyRes, req, res) {
+    // Ajusta o cabeçalho 'content-type' para garantir que seja tratado como imagem
+    if (proxyRes.headers['content-type']) {
+      proxyRes.headers['content-type'] = 'image/jpeg'; // Ajuste conforme o tipo real da imagem
+    }
+  },
+}));
 
 // Rota principal
 app.get('/', async (req, res) => {

@@ -78,9 +78,9 @@
     <div class="product-grid">
       <% produtos.forEach(produto => { %>
         <div class="product-item">
-          <div class="image-container" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-img-src="http://177.70.29.34:48180/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" data-bs-produto-descr="<%= produto.DESCRPROD %>">
-            <img src="http://177.70.29.34:48180/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" alt="<%= produto.DESCRPROD %>">
-          </div>          
+          <div class="image-container" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-img-src="/proxy/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" data-bs-produto-descr="<%= produto.DESCRPROD %>">
+            <img src="/proxy/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" alt="<%= produto.DESCRPROD %>">
+          </div>         
           <p><b>R$ <%= parseFloat(produto.PRECO).toFixed(2) %> UN</b><br><b><%= produto.CODPROD %></b> - <%= produto.DESCRPROD %></p>
         </div>
       <% }); %>
