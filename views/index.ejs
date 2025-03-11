@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Lista de Produtos</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Contador</th>
+          <th>Código do Produto</th>
+          <th>Referência</th>
+          <th>Grupo</th>
+          <th>Imagem</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- <%= cont = 0 %> -->
+        <% produtos.forEach(produto => { %>
+          <tr>
+            <td><%= cont=cont+1%></td>
+            <td><%= produto.CODPROD %></td>
+            <td><%= produto.DESCRPROD %></td>
+            <td><%= produto.DESCRGRUPOPROD %></td>
+            <td>
+            <!-- <img src="http://177.70.29.34:48180/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" alt="Imagem do Produto" width="100"> -->
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produtos</title>
+  <!-- Adicionando o CSS do Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* Título centralizado */
+    .titulo-container {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Ajustando os produtos para exibir 3 por linha no desktop e 2 no mobile */
+    .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .product-item {
+      flex: 1 1 calc(33.333% - 10px); /* 3 produtos por linha no desktop */
+      box-sizing: border-box;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .image-container {
+      width: 100%;
+      max-width: 200px;
+      height: 200px;
+      margin: 0 auto;
+      cursor: pointer;
+    }
+
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Garantir que a imagem não será cortada e será redimensionada para caber */
+    }
+
+    /* Responsividade: 2 produtos por linha no mobile */
+    @media (max-width: 768px) {
+      .product-item {
+        flex: 1 1 calc(50% - 10px); /* 2 produtos por linha */
+      }
+    }
+
+    /* Responsividade para dispositivos menores (1 produto por linha no mobile) */
+    @media (max-width: 480px) {
+      .product-item {
+        flex: 1 1 100%; /* 1 produto por linha */
+      }
+    }
+
+    /* Estilo para o botão flutuante */
+    .btn-voltar {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botão flutuante para voltar -->
+  <a href="javascript:history.back()" class="btn btn-secondary btn-voltar">
+    <i class="bi bi-arrow-left"></i> Voltar
+  </a>
+
+  <div class="container">
+    <div class="titulo-container">
+        <h1>Lista de Produtos <%= categoria %></h1>
+    </div>
+    <div class="product-grid">
+      <% produtos.forEach(produto => { %>
+        <div class="product-item">
+          <div class="image-container" data-bs-toggle="modal" data-bs-target="#imageModal" data-bs-img-src="http://177.70.29.34:48180/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" data-bs-produto-descr="<%= produto.DESCRPROD %>">
+            <img src="http://177.70.29.34:48180/mge/Produto@IMAGEM@CODPROD=<%= produto.CODPROD %>.dbimage" alt="<%= produto.DESCRPROD %>">
+          </div>          
+          <p><b>R$ <%= parseFloat(produto.PRECO).toFixed(2) %> UN</b><br><b><%= produto.CODPROD %></b> - <%= produto.DESCRPROD %></p>
+        </div>
+      <% }); %>
+    </div>
+  </div>
+
+  <!-- Modal para mostrar imagem em tamanho grande -->
+  <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="imageModalLabel">Imagem do Produto</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <img id="modalImage" src="" alt="Imagem Grande" class="img-fluid w-100">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts do Bootstrap e ícones (para o botão de voltar) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+
+  <script>
+    // Script para atualizar a imagem e o título do modal
+    var modal = document.getElementById('imageModal');
+    modal.addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget; // Botão que acionou o modal
+      var imgSrc = button.getAttribute('data-bs-img-src'); // Obtém o link da imagem
+      var produtoDescr = button.getAttribute('data-bs-produto-descr'); // Obtém a descrição do produto
+      var modalImage = modal.querySelector('#modalImage'); // Seleciona a imagem do modal
+      var modalTitle = modal.querySelector('#imageModalLabel'); // Seleciona o título do modal
+      modalImage.src = imgSrc; // Atualiza a imagem no modal
+      modalTitle.textContent = produtoDescr; // Atualiza o título do modal com a descrição do produto
+    });
+  </script>
+</body>
+</html>
