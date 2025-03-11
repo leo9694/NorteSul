@@ -41,7 +41,6 @@ app.get('/produtos', async (req, res) => {
   const categoria = req.query.categoria;
   try {
     const produtos = await consultarProdutoCategoria(categoria);
-    console.log(produtos)
     res.render('produtos', { produtos, categoria });
   } catch (error) {
     res.status(500).send('Erro ao consultar produtos por categoria');
